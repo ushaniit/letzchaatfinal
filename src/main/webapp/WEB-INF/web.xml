@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5">
+         
+  <display-name>Archetype Created Web Application</display-name>
+  <context-param>
+		<param-name>contextConfigLocation</param-name>
+	 <param-value>/WEB-INF/dispatcher-servlet.xml,/WEB-INF/application-context.xml,/WEB-INF/security-context.xml</param-value>
+	</context-param>
+	
+    <filter>
+      <filter-name>springSecurityFilterChain</filter-name>
+      <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+   </filter>
+   <filter-mapping>
+      <filter-name>springSecurityFilterChain</filter-name>
+      <url-pattern>/*</url-pattern>
+   </filter-mapping>
+	
+  <listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+  <servlet>
+  <servlet-name>dispatcher</servlet-name>
+  <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  <servlet-name>dispatcher</servlet-name>
+  <url-pattern>/</url-pattern>
+  </servlet-mapping>
+   	
+   	<filter>
+		<filter-name>continuation</filter-name>
+		<filter-class>org.eclipse.jetty.continuation.ContinuationFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>continuation</filter-name>
+		<url-pattern>/Letzchaat.com/*</url-pattern>
+	</filter-mapping>
+  
+  
+  <!-- Cometd Servlet -->
+	<servlet>
+		<servlet-name>Letzchaat.com</servlet-name>
+		<servlet-class>org.cometd.annotation.AnnotationCometdServlet</servlet-class>
+		<init-param>
+			<param-name>timeout</param-name>
+			<param-value>20000</param-value>
+		</init-param>
+		<init-param>
+			<param-name>interval</param-name>
+			<param-value>0</param-value>
+		</init-param>
+		<init-param>
+			<param-name>maxInterval</param-name>
+			<param-value>10000</param-value>
+		</init-param>
+		<init-param>
+			<param-name>maxLazyTimeout</param-name>
+			<param-value>5000</param-value>
+		</init-param>
+		<init-param>
+			<param-name>long-polling.multiSessionInterval</param-name>
+			<param-value>2000</param-value>
+		</init-param>
+		<init-param>
+			<param-name>logLevel</param-name>
+			<param-value>0</param-value>
+		</init-param>
+		<init-param>
+			<param-name>transports</param-name>
+			<param-value>org.cometd.websocket.server.WebSocketTransport</param-value>
+		</init-param>
+		 <init-param>
+			<param-name>services</param-name>
+			<param-value>com.letzchaat.service.ChatService</param-value>
+		</init-param>
+		
+	</servlet>
+	
+ 	  <servlet-mapping>
+		<servlet-name>Letzchaat.com</servlet-name>
+		<url-pattern>/Letzchaat.com/*</url-pattern>
+	</servlet-mapping> 
+	
+</web-app>
+  
